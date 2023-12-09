@@ -1,9 +1,7 @@
 # -*- coding: utf8 -*-
-from http import client
 import socket
 import sys
 import datetime
-import time
 import select
 import json
 
@@ -20,7 +18,6 @@ try:
 except Exception as e:
     print(e)
 print("채팅서버 (%s: %s)에 연결되었습니다" %ADDR)
-
 
 room_num = int(input("\n◽ 입장할 채팅방 번호를 입력하세요: "))
 
@@ -50,7 +47,6 @@ while True:
         s+="\n"
         print(s)
         break
-
 
 while True:
     now = datetime.datetime.now()

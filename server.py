@@ -5,7 +5,6 @@ import sys
 import select
 import datetime
 import json
-import mysql.connector
 
 class overlappedError(Exception):
 	def __init__(self):
@@ -20,7 +19,7 @@ def find_nick(connection_dict, conn_val):
 def find_room_num(connection_status, conn_val):
 	return next(room_num for room_num, connection_dict in connection_status.items() if conn_val in connection_dict)
 
-def messageManage(data):
+def manage_message(data):
 	global connectionStatus
 	room_num = find_room_num(connectionStatus, conn)
 	connection_dict = connectionStatus[room_num]
@@ -124,14 +123,18 @@ while True:
 			else:    # 이미 접속한 클라이언트의 소켓이라면 클라이언트가 보낸 메시지 수신
 				conn = sock
 				data = conn.recv(1024).decode()
-
+				
 				if 'room_num' not in data:  # 이미 접속한 클라이언트의 "메시지" 수신
 					try:
-						messageManage(data)  # 클라이언트의 메시지에 command가 있으면 해당 내용 수행, 없으면 메시지 자체를 broadcast
+						manage_message(data)  # 클라이언트의 메시지에 command가 있으면 해당 내용 수행, 없으면 메시지 자체를 broadcast
+					except IndexError:
+						print(f"Disconnected by {addr[0]}:{addr[1]}")
+						sys.exit()
 					except Exception as e:
-						print(f"[messageManage] {e} by {data}")
-
-				else:  						# "최초" 접속한 클라이언트의 정보 수신
+						print(f"[manage_message] {e} by {data}")
+				
+				# "최초" 접속한 클라이언트의 정보 수신
+				else:
 					login_info = json.loads(data)  # json 문자열인 data를 -> json.loads(data) -> 파이썬 객체(dict)
 					try:
 						chat_room.clientInfo(conn, login_info)
@@ -142,4 +145,5 @@ while True:
 		print(e)
 		server_sock.close()
 		sys.exit()
+
 
