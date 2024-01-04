@@ -11,7 +11,7 @@ from authenticator import AuthManager
 
 parser = argparse.ArgumentParser(description='TCP Echo Server')
 parser.add_argument('-host', '--hostname', default='localhost', help="서버 호스트")
-parser.add_argument('-port', '--portnum', default=9995, help="서버 포트")
+parser.add_argument('-port', '--portnum', default=9998, help="서버 포트")
 argument = parser.parse_args()
 host = argument.hostname
 port = int(argument.portnum)
@@ -40,16 +40,16 @@ class ChattingServer:
          # selectors에서 해당 클라이언트 커넥션 등록 해제
          self.sel.unregister(client_conn)
          # SocketRepo.connections_info에서 해당 클라이언트 커넥션 정보 삭제
-         connections_info = SocketRepo.get_connections_info()
-         room_num = self.messenger.find_room_num(connections_info, client_conn)
-         client_id = self.messenger.find_client_id(connections_info[room_num], client_conn)
+         room_num = self.messenger.find_room_num(client_conn)
+         client_id = self.messenger.find_client_id(room_num, client_conn)
          SocketRepo.del_connection_info(room_num, client_conn)
          # 해당 클라이언트 커넥션용 소켓 close
          client_conn.close()
          print(f"[INFO] [room_num_{room_num}] {client_id}님 퇴장")
          # 해당 room의 모든 클라이언트들에게 broadcast
-         for sock in connections_info[room_num]:
-            sock.send(f"[INFO] {client_id}님 퇴장".encode())
+         clients = self.messenger.find_clients(room_num)
+         for conn in clients:
+            conn.send(f"[INFO] {client_id}님 퇴장".encode())
 
    def accept(self, sock, mask):
       client_conn, _ = sock.accept()
