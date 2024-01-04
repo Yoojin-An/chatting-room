@@ -2,7 +2,7 @@ from repository import SocketRepo
 
 class OverlappedError(Exception):
 	def __init__(self):
-		super().__init__("\n※ 이미 사용중인 닉네임입니다. 다시 입력해주세요.\n")
+		super().__init__("\n※ 이미 사용중인 아이디입니다. 다시 입력해주세요.\n")
 
 
 class AuthManager:
