@@ -81,7 +81,7 @@ class Client:
             else: # 아이디가 바뀐 경우
                 changed_info = json.loads(data)
                 self.client_id = changed_info['changed_id'].replace('\n', "")
-                print(f"[INFO] {self.client_id}로 아이디가 변경되었습니다.")
+                print(f"[INFO] {self.client_id}(으)로 아이디가 변경되었습니다.")
 
         # 표준입력(stdin) 시
         else:

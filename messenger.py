@@ -2,6 +2,7 @@ import json
 import socket
 import datetime
 from repository import SocketRepo
+from authenticator import OverlappedError
 
 class Messenger:
 	def __init__(self):
@@ -52,13 +53,15 @@ class Messenger:
 				new_client_id = data.split(' ')[2]
 				if new_client_id not in clients.values():
 					SocketRepo.upsert_connections_info(room_num, conn, new_client_id) # 새로운 client_id로 갱신
-				msg = {"changed_id": new_client_id}
-				conn.send(json.dumps(msg).encode())
-				for sock in clients.keys():
-					if sock != conn:   # 닉네임을 바꾼 클라이언트를 제외한 채팅방 멤버에게 메시지 전달
-						sock.send(f"[INFO] {original_client_id}님이 {new_client_id}로 아이디 변경".encode())
-			except Exception as e:
-				print(type(e), e)
+					msg = {"changed_id": new_client_id}
+					conn.send(json.dumps(msg).encode())
+					for sock in clients.keys():
+						if sock != conn:   # 닉네임을 바꾼 클라이언트를 제외한 채팅방 멤버에게 메시지 전달
+							sock.send(f"[INFO] {original_client_id}님이 {new_client_id}(으)로 아이디 변경".encode())
+				else:
+					raise OverlappedError
+			except OverlappedError as e:
+				conn.send(f'{e}'.encode())
 
 		elif data.split(' ')[1] == '!member':
 			member_list = list(clients.values())
