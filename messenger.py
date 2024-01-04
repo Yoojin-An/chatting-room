@@ -37,6 +37,7 @@ class Messenger:
 		elif data.split(' ')[1] == '!change':
 			original_client_id = self.find_client_id(clients, conn) # conn으로 client_id 찾기
 			new_client_id = data.split(' ')[2]
+			if new_client_id not in 
 			SocketRepo.upsert_connections_info(room_num, conn, new_client_id) # 새로운 client_id로 갱신
 			msg = {f"[INFO] {new_client_id}로 아이디가 변경되었습니다.".encode()}
 			conn.send(json.dumps(msg).encode())
@@ -51,5 +52,5 @@ class Messenger:
 		else: 
 			msg = data
 			print(f'[MESSAGE] {data}')	
-			for sock in clients:
-				sock.send(msg.encode())
+			for conn in clients:
+				conn.send(msg.encode())

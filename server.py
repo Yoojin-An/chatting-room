@@ -3,18 +3,24 @@ import socket
 import sys
 import selectors
 import json
+import argparse
 from time import time
 from messenger import Messenger
 from repository import SocketRepo
 from authenticator import AuthManager
 
+parser = argparse.ArgumentParser(description='TCP Echo Server')
+parser.add_argument('-host', '--hostname', default='localhost', help="서버 호스트")
+parser.add_argument('-port', '--portnum', default=9995, help="서버 포트")
+argument = parser.parse_args()
+host = argument.hostname
+port = int(argument.portnum)
+
 class ChattingServer:
-   HOST = '127.0.0.1'
-   PORT = 9111
    def __init__(self):
       self.sel = selectors.KqueueSelector()
       self.server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-      self.server_sock.bind((ChattingServer.HOST, ChattingServer.PORT))
+      self.server_sock.bind((host, port))
       self.server_sock.listen(100) # 서버가 동시 처리할 수 있는 연결 요청의 최대 큐 크기(default = 5)
       self.server_sock.setblocking(False)
       self.sel.register(self.server_sock, selectors.EVENT_READ, self.accept)
@@ -52,7 +58,7 @@ class ChattingServer:
 
    def run(self):
       print("==============================================")
-      print("채팅 서버를 시작합니다. %s 포트로 접속을 기다립니다." % str(ChattingServer.PORT))
+      print("채팅 서버를 시작합니다. %s 포트로 접속을 기다립니다." % str(port))
       print("==============================================")
 
       while True:
@@ -77,5 +83,6 @@ class ChattingServer:
             self.server_sock.close()
             sys.exit()
 
-chatting_server = ChattingServer()
-chatting_server.run()
+if __name__ == '__main__':
+	chatting_server = ChattingServer()
+	chatting_server.run()
