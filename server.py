@@ -11,7 +11,7 @@ from authenticator import AuthManager
 
 parser = argparse.ArgumentParser(description='TCP Echo Server')
 parser.add_argument('-host', '--hostname', default='localhost', help="서버 호스트")
-parser.add_argument('-port', '--portnum', default=9998, help="서버 포트")
+parser.add_argument('-port', '--portnum', default=9993, help="서버 포트")
 argument = parser.parse_args()
 host = argument.hostname
 port = int(argument.portnum)

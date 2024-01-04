@@ -9,7 +9,7 @@ import io
 
 parser = argparse.ArgumentParser(description='TCP Client')
 parser.add_argument('-host', '--hostname', default='localhost', help="서버 호스트")
-parser.add_argument('-port', '--portnum', default=9998, help="서버 포트")
+parser.add_argument('-port', '--portnum', default=9993, help="서버 포트")
 argument = parser.parse_args()
 host = argument.hostname
 port = int(argument.portnum)
@@ -34,6 +34,7 @@ class Client:
             else: # 아이디가 바뀐 경우
                 changed_info = json.loads(data)
                 self.client_id = changed_info['changed_id'].replace('\n', "")
+                print(f"[INFO] {self.client_id}로 아이디가 변경되었습니다.")
 
         # 표준입력(stdin) 시
         else:
@@ -55,15 +56,14 @@ class Client:
             except ValueError:
                 print("숫자를 입력해주세요.")
                 continue
-            self.client_id = input("◽ 사용하실 아이디을 입력하세요: ")
+            self.client_id = input("◽ 사용하실 아이디를 입력하세요: ")
             if ' ' in self.client_id:
                 print("공백 없이 입력해주세요👀")
                 continue
 
-            login_info = {'room_num': room_num, 'client_id': self.client_id}
+            login_info = {"room_num": room_num, "client_id": self.client_id}
             self.connection_sock.send(json.dumps(login_info).encode())  # 클라이언트 정보 송신
             is_authenticated = self.connection_sock.recv(1024).decode()  # 아이디 중복 여부 수신
-
             # 중복 아이디인 경우 overlappedError 메시지 수신
             if is_authenticated != 'Y':
                 print(is_authenticated)

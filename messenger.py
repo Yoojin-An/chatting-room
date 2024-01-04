@@ -44,21 +44,16 @@ class Messenger:
 				sender_id = self.find_client_id(room_num, sender_conn) # conn으로 client_id 찾기
 				receiver_conn.send(f"(귓속말){sender_id}{time_str}: {msg}".encode())
 			else:
-				receiver_conn.send(f"입력하신 아이디 존재하지 않습니다.".encode())
+				receiver_conn.send(f"입력하신 아이디는 존재하지 않습니다.".encode())
 
 		elif data.split(' ')[1] == '!change':
 			try:
-				print(1)
 				original_client_id = self.find_client_id(room_num, conn) # conn으로 client_id 찾기
-				print(2)
 				new_client_id = data.split(' ')[2]
-				print(3)
-				SocketRepo.upsert_connections_info(room_num, conn, new_client_id) # 새로운 client_id로 갱신
-				print(4)
-				msg = f"[INFO] {new_client_id}로 아이디가 변경되었습니다."
-				print(type(msg))
+				if new_client_id not in clients.values():
+					SocketRepo.upsert_connections_info(room_num, conn, new_client_id) # 새로운 client_id로 갱신
+				msg = {"changed_id": new_client_id}
 				conn.send(json.dumps(msg).encode())
-				print(6)
 				for sock in clients.keys():
 					if sock != conn:   # 닉네임을 바꾼 클라이언트를 제외한 채팅방 멤버에게 메시지 전달
 						sock.send(f"[INFO] {original_client_id}님이 {new_client_id}로 아이디 변경".encode())
