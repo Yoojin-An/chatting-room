@@ -54,9 +54,7 @@
 
 #### multiplexing은 Asyncronous - Blocking 영역에 해당됨</br>
 
-    💡 system call의 실제적인 이벤트 처리에 있어서는 하나의 FD의 I/O 작업이 완료되어야 다음 FD의 작업으로 넘어가기 때문에 동기적으로 동작(Syncronous)
-    합니다. 또한 user space에서의 I/O 작업 자체는 Block되지 않으므로 multiplexing을 무조건 Asyncronous - Blocking 모델이라고 단정지을 수는 없습니다. 
-    하지만 큰 틀에서 보면 예측 불가능하게 인입되는 다수의 클라이언트의 요청을 '비동기적'으로(Asyncronous) 수행하며, I/O system call에 대한 kernel의 응답은 'Block'됩니다.
+💡 system call의 실제적인 이벤트 처리에 있어서는 하나의 FD의 I/O 작업이 완료되어야 다음 FD의 작업으로 넘어가기 때문에 동기적으로 동작(Syncronous)합니다. 또한 user space에서의 I/O 작업 자체는 Block되지 않으므로 multiplexing을 무조건 Asyncronous - Blocking 모델이라고 단정지을 수는 없습니다. 하지만 큰 틀에서 보면 예측 불가능하게 인입되는 다수의 클라이언트의 요청을 '비동기적'으로(Asyncronous) 수행하며, I/O system call에 대한 kernel의 응답은 'Block'됩니다.
 
 </br>
 
