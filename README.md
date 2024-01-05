@@ -12,17 +12,6 @@
 
 </br>
 
-### 💻 프로그램 실행 방법
-1개의 server.py 파일과 N개의 client.py 파일을 실행시킵니다.</br> host와 port는 실행 인자로 전달함으로써 지정 가능합니다. (생략 시 default값: '127.0.0.1', 9993) 
-
-
-    python3 server.py --host [서버 호스트 아이피] --port [서버 포트]
-</br>
-
-    python3 client.py --host [서버 호스트 아이피] --port [서버 포트]
-
-</br></br>
-
 ### 📌 프로그램 기능</br>
 * 클라이언트는 서버에 접속하여 클라이언트간의 메세지를 공유할 수 있음
 * 클라이언트 최초 접속 시 입장할 채팅방 번호와 아이디를 입력. 아이디 중복 체크 후 통과하면 해당 채팅방에 접속
@@ -34,17 +23,29 @@
 
 </br></br>
 
+### 💻 프로그램 실행 방법
+1개의 server.py 파일과 N개의 client.py 파일을 실행시킵니다.</br> host와 port는 실행 인자로 전달함으로써 지정 가능합니다. (생략 시 default값: '127.0.0.1', 9993) 
+
+
+    python3 server.py --host [서버 호스트 아이피] --port [서버 포트]
+</br>
+
+    python3 client.py --host [서버 호스트 아이피] --port [서버 포트]
+
+</br></br>
+
+
 ### 📝 프로젝트 관련 지식
 
 #### I/O 모델 종류: 작업 순서(Sync/Async)와 작업 완료 대기 여부(Blocking/Non-Blocking)로 구분 </br>
 
 '작업 순서'와 '대기 여부' 두 가지 특성은 독립적이므로 I/O 모델에는 Syncronous-Blocking, Syncronous-NonBlocking, Asyncronous-Blocking, Asyncronous-NonBlocing 4 종류가 존재합니다. </br>
 
-* 작업 순서에 따른 구분
+* 작업 순서에 따른 구분</br>
         * Sync: 작업 순서를 보장합니다. user space에서 작업 완료를 판단하므로 현재 작업에 대한 응답 시점과 다음 작업을 요청하는 시점이 일치합니다. 
         * Async: 작업 순서를 보장하지 않습니다. kernel의 작업이 완료되는 순서대로 call back 형식으로 동작합니다.
 
-* 대기 여부에 따른 구분
+* 대기 여부에 따른 구분</br>
         * Blocking: 요청한 I/O 작업에 대한 완료 시그널을 kernel로부터 받기 전까지 다른 작업을 하지 않고 기다립니다.
         * Non-Blocking: kernel에 I/O 작업을 요청한 후 기다리지 않고 다른 작업을 합니다. (polling으로 대기 중에 작업 상태 확인은 가능).
     
@@ -52,7 +53,7 @@
 
 #### multiplexing은 Asyncronous - Blocking 영역에 해당됨</br>
 
-        💡 system call의 실제적인 이벤트 처리에 있어서는 하나의 FD의 I/O 작업이 완료되어야 다음 FD의 작업으로 넘어가기 때문에 동기적으로 동작(Syncronous)합니다. 또한 user space에서의 I/O 작업 자체는 Block되지 않으므로 multiplexing을 무조건 Asyncronous - Blocking 모델이라고 단정지을 수는 없습니다. 하지만 큰 틀에서 보면 예측 불가능하게 인입되는 다수의 클라이언트의 요청을 '비동기적'으로(Asyncronous) 수행하며, I/O system call에 대한 kernel의 응답은 'Block'됩니다.
+💡 system call의 실제적인 이벤트 처리에 있어서는 하나의 FD의 I/O 작업이 완료되어야 다음 FD의 작업으로 넘어가기 때문에 동기적으로 동작(Syncronous)합니다. 또한 user space에서의 I/O 작업 자체는 Block되지 않으므로 multiplexing을 무조건 Asyncronous - Blocking 모델이라고 단정지을 수는 없습니다. 하지만 큰 틀에서 보면 예측 불가능하게 인입되는 다수의 클라이언트의 요청을 '비동기적'으로(Asyncronous) 수행하며, I/O system call에 대한 kernel의 응답은 'Block'됩니다.
 
 </br>
 
