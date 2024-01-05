@@ -54,9 +54,10 @@
 
 #### multiplexing은 Asyncronous - Blocking 영역에 해당됨</br>
 
-    💡 system call의 실제적인 이벤트 처리에 있어서는 하나의 FD의 I/O 작업이 완료되어야 다음 FD의 작업으로 넘어가기 때문에 동기적으로 동작(Syncronous)합니다. 
-    또한 user space에서의 I/O 작업 자체는 Block되지 않으므로 multiplexing을 무조건 Asyncronous - Blocking 모델이라고 단정지을 수는 없습니다. 
-    하지만 큰 틀에서 보면 예측 불가능하게 인입되는 다수의 클라이언트의 요청을 '비동기적'으로(Asyncronous) 수행하며, I/O system call에 대한 kernel의 응답은 'Block'됩니다.
+    💡 system call의 실제적인 이벤트 처리에 있어서는 하나의 FD의 I/O 작업이 완료되어야 다음 FD의 작업으로 넘어가기 때문에 
+    동기적으로 동작(Syncronous)합니다. 또한 user space에서의 I/O 작업 자체는 Block되지 않으므로 multiplexing을 무조건 
+    Asyncronous - Blocking 모델이라고 단정지을 수는 없습니다. 하지만 큰 틀에서 보면 예측 불가능하게 인입되는 다수의 클라이언트의 
+    s요청을 '비동기적'으로(Asyncronous) 수행하며, I/O system call에 대한 kernel의 응답은 'Block'됩니다.
 
 </br>
 
@@ -68,9 +69,9 @@ user 레벨에서 FD 상태를 감시하는 라이브러리이며 관심 있는 
 
     - select: 이벤트 발생 시마다 관리하는 모든 FD를 검사하는 원초적 방식, 최대로 관리 가능한 FD의 개수는 1024개
     - pselect: select의 timeout 정밀도와 signal 처리 로직이 개선된 버전
-    - poll: 이벤트 발생한 FD의 개수만큼만 검사, select는 하나의 이벤트 처리에 3bit를 사용하는 반면 poll은 64bit를 사용하므로 FD 수가 많아질수록 select보다 비효율적, 
-            관리 가능한 FD 개수는 무제한
-    - ppoll: poll의 timeout 정밀도와 signal 처리 로직이 개선된 버전 </br>
+    - poll: 이벤트 발생한 FD의 개수만큼만 검사, select는 하나의 이벤트 처리에 3bit를 사용하는 반면 poll은 64bit를 사용하므로 
+            FD 수가 많아질수록 select보다 비효율적, 관리 가능한 FD 개수는 무제한
+    - ppoll: poll의 timeout 정밀도와 signal 처리 로직이 개선된 버전
 
 
 ② epoll, kqueue, IOCP, devpoll </br>
