@@ -5,9 +5,9 @@
 
 ### ⚙️ 프로젝트 환경</br>
 
-<img src="https://img.shields.io/badge/macOS-000000?style=flat&logo=macOS&logoColor=white"> </br>
-<img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white"> 3.11.6</br>
-<img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white"> 8.1.0</br>
+* <img src="https://img.shields.io/badge/macOS-000000?style=flat&logo=macOS&logoColor=white"> </br>
+* <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white"> 3.11.6</br>
+* <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white"> 8.1.0</br>
 
 
 </br>
