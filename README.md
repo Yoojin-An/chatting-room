@@ -35,6 +35,7 @@
 ### 📝 프로젝트 관련 지식
 
 #### I/O 모델 종류: 작업 순서(Sync/Async)와 작업 완료 대기 여부(Blocking/Non-Blocking)로 구분 </br>
+
 '작업 순서'와 '대기 여부' 두 가지 특성은 독립적이므로 I/O 모델에는 Syncronous-Blocking, Syncronous-NonBlocking, Asyncronous-Blocking, Asyncronous-NonBlocing 4 종류가 존재합니다. </br>
 
     * 작업 순서에 따른 구분
@@ -54,6 +55,7 @@
 </br>
 
 #### multiplexing 종류: FD 관리 방법 및 관리 주체에 따라 크게 두 가지로 구분 </br>
+
     ① select, pselect, poll, ppoll</br>
     user 레벨에서 FD 상태를 감시하는 라이브러리이며 관심 있는 FD를 모두 관리 대상으로 등록해놓습니다. 이벤트 발생 시 해당 FD를 찾기 위해 loop를 순환합니다.</br> 
         ∴ 시간복잡도는 O(n) 입니다. </br> 
