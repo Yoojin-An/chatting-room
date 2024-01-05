@@ -1,6 +1,6 @@
 # I/O multiplexing chatting program
 
-#### 다수의 클라이언트가 하나의 다중화 서버에서 TCP로 통신할 수 있는 N:1 채팅 프로그램입니다. </br>초기 모델은 서버 다중화(multiplexing)를 위한 I/O system call로 select를 사용했으며, 이벤트 처리 효율 개선을 위해 kqueue로 고도화 했습니다.</br>
+#### 하나의 다중화 서버에서 다수의 클라이언트가 TCP로 통신할 수 있는 1:N 채팅 프로그램입니다. </br>초기 모델은 서버 다중화(multiplexing)를 위한 I/O system call로 select를 사용했으며, 이벤트 처리 효율 개선을 위해 kqueue로 고도화 했습니다.</br>
 </br>
 
 ### ⚙️ 프로젝트 환경</br>
