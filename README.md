@@ -16,11 +16,7 @@
 1개의 server.py 파일과 N개의 client.py 파일을 실행시킵니다.</br> host와 port는 실행 인자로 전달함으로써 지정 가능합니다. (생략 시 default값: '127.0.0.1', 9993) 
 
 
-
     python3 server.py --host [서버 호스트 아이피] --port [서버 포트]
-
-
-
     python3 client.py --host [서버 호스트 아이피] --port [서버 포트]
 
 </br>
